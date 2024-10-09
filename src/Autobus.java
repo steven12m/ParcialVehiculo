@@ -1,28 +1,21 @@
 public class Autobus extends Vehiculo {
-    private int capacidadPasajeros;
+    private int capacidadPasajeros; // cantidad de pasajeros
 
     public Autobus(String idVehiculo, String marca, String modelo, int año, double costoDiario, int capacidadPasajeros) {
         super(idVehiculo, marca, modelo, año, costoDiario);
         this.capacidadPasajeros = capacidadPasajeros;
     }
 
-    @Override
-    protected void setDisponible(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDisponible'");
+    public int getCapacidadPasajeros() {
+        return capacidadPasajeros;
+    }
+
+    public void setCapacidadPasajeros(int capacidadPasajeros) {
+        this.capacidadPasajeros = capacidadPasajeros;
     }
 
     @Override
-    protected String getIdVehiculo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIdVehiculo'");
+    public String toString() {
+        return super.getMarca() + " " + super.getModelo() + " (Capacidad: " + capacidadPasajeros + " pasajeros)";
     }
-
-    @Override
-    public String getModelo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getModelo'");
-    }
-
-    // Getters y Setters...
 }

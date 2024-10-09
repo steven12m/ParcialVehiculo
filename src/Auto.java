@@ -6,23 +6,7 @@ public class Auto extends Vehiculo {
         this.tipoCombustible = tipoCombustible;
     }
 
-    @Override
-    protected void setDisponible(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDisponible'");
+    public String getTipoCombustible() {
+        return tipoCombustible;
     }
-
-    @Override
-    protected String getIdVehiculo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIdVehiculo'");
-    }
-
-    @Override
-    public String getModelo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getModelo'");
-    }
-
-    // Getters y Setters...
 }

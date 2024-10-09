@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,18 +5,16 @@ public class Administrador {
     private List<Vehiculo> flota;
 
     public Administrador() {
-        flota = new ArrayList<>();
+        this.flota = new ArrayList<>();
     }
 
     public void añadirVehiculo(Vehiculo vehiculo) {
         flota.add(vehiculo);
+        System.out.println("Vehículo añadido: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
     }
-    
 
-    public boolean verificarDisponibilidad(Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin) {
-        // Aquí implementa la lógica para verificar la disponibilidad del vehículo
-        // Puedes usar una lista de reservas para hacer esta verificación.
-        return vehiculo.isDisponible(); // Método que deberías implementar en Vehiculo
+    public boolean verificarDisponibilidad(Vehiculo vehiculo) {
+        return vehiculo.isDisponible();
     }
 
     public List<Vehiculo> listarVehiculosDisponibles() {

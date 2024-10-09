@@ -14,17 +14,16 @@ public class Cliente {
     }
 
     public void reservarVehiculo(Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin, boolean seguro, boolean gps) {
-        // Lógica para crear una reserva y agregarla a la lista de reservas
-        Reserva nuevaReserva = new Reserva(this, vehiculo, fechaInicio, fechaFin, vehiculo.calcularPrecio(1, seguro, gps));
+        if (!vehiculo.isDisponible()) {
+            System.out.println("El vehículo no está disponible.");
+            return;
+        }
+        Reserva nuevaReserva = new Reserva(this, vehiculo, fechaInicio, fechaFin);
         reservas.add(nuevaReserva);
-        vehiculo.setDisponible(false); // Marcar vehículo como no disponible
         nuevaReserva.confirmarReserva();
     }
 
-    public LocalDate getReservas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getReservas'");
+    public List<Reserva> getReservas() {
+        return reservas;
     }
-
-    // Getters y Setters...
 }

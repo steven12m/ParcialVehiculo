@@ -3,114 +3,153 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Crear el administrador de la flota
+        Administrador admin = new Administrador();
         Scanner scanner = new Scanner(System.in);
-        
-        // Crear un administrador
-        Administrador administrador = new Administrador();
 
-        // Ingreso de información del vehículo
-        System.out.println("=== Ingreso de Información del Vehículo ===");
-        
-        System.out.print("ID del vehículo: ");
+        while (true) {
+            System.out.println("\n--- Sistema de Gestión de Alquiler de Vehículos ---");
+            System.out.println("1. Añadir vehículo");
+            System.out.println("2. Listar vehículos disponibles");
+            System.out.println("3. Reservar un vehículo");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opción: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine();  // Consumir el salto de línea después de un int
+
+            switch (opcion) {
+                case 1:
+                    añadirVehiculo(admin, scanner);
+                    break;
+                case 2:
+                    listarVehiculosDisponibles(admin);
+                    break;
+                case 3:
+                    reservarVehiculo(admin, scanner);
+                    break;
+                case 4:
+                    System.out.println("Saliendo del sistema...");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+        }
+    }
+
+    // Método para añadir un vehículo interactivo
+    public static void añadirVehiculo(Administrador admin, Scanner scanner) {
+        System.out.println("\n--- Añadir Vehículo ---");
+        System.out.println("Seleccione el tipo de vehículo:");
+        System.out.println("1. Auto");
+        System.out.println("2. Moto");
+        System.out.println("3. Camioneta");
+        System.out.println("4. Autobús");
+        System.out.print("Ingrese opción: ");
+        int tipoVehiculo = scanner.nextInt();
+        scanner.nextLine(); // Consumir salto de línea
+
+        System.out.print("ID del Vehículo: ");
         String idVehiculo = scanner.nextLine();
-        
+
         System.out.print("Marca: ");
         String marca = scanner.nextLine();
-        
+
         System.out.print("Modelo: ");
         String modelo = scanner.nextLine();
-        
+
         System.out.print("Año: ");
-        int año = Integer.parseInt(scanner.nextLine());
-        
+        int año = scanner.nextInt();
+
         System.out.print("Costo diario: ");
-        double costoDiario = Double.parseDouble(scanner.nextLine());
-        
-        System.out.print("Disponibilidad (true/false): ");
-        boolean disponibilidad = Boolean.parseBoolean(scanner.nextLine());
+        double costoDiario = scanner.nextDouble();
+        scanner.nextLine();  // Consumir salto de línea
 
-        // Crear un cliente
-        System.out.println("\n=== Ingreso de Información del Cliente ===");
-        System.out.print("Ingrese ID del cliente: ");
-        String idCliente = scanner.nextLine();
-        
-        System.out.print("Ingrese nombre del cliente: ");
-        String nombreCliente = scanner.nextLine();
-        
-        Cliente cliente = new Cliente(idCliente, nombreCliente);
-
-        
-        // Ingresar tipo de vehículo específico
-        System.out.print("Tipo de vehículo (Auto, Moto, Camioneta, Autobús): ");
-        String tipoVehiculo = scanner.nextLine().toLowerCase();
-        
-        Vehiculo vehiculo = null;
-
-        // Solicitar características específicas según el tipo de vehículo
         switch (tipoVehiculo) {
-            case "auto":
-                System.out.print("Tipo de combustible (Gasolina, Diésel, Eléctrico): ");
+            case 1: // Auto
+                System.out.print("Tipo de combustible (Gasolina, Diesel, Eléctrico): ");
                 String tipoCombustible = scanner.nextLine();
-                vehiculo = new Auto(idVehiculo, marca, modelo, año, costoDiario, tipoCombustible);
+                Auto auto = new Auto(idVehiculo, marca, modelo, año, costoDiario, tipoCombustible);
+                admin.añadirVehiculo(auto);
                 break;
-
-            case "moto":
+            case 2: // Moto
                 System.out.print("Cilindrada (cc): ");
-                int cilindrada = Integer.parseInt(scanner.nextLine());
-                vehiculo = new Moto(idVehiculo, marca, modelo, año, costoDiario, cilindrada);
+                int cilindrada = scanner.nextInt();
+                scanner.nextLine();  // Consumir salto de línea
+                Moto moto = new Moto(idVehiculo, marca, modelo, año, costoDiario, cilindrada);
+                admin.añadirVehiculo(moto);
                 break;
-
-            case "camioneta":
+            case 3: // Camioneta
                 System.out.print("Capacidad de carga (kg): ");
-                int capacidadCarga = Integer.parseInt(scanner.nextLine());
-                vehiculo = new Camioneta(idVehiculo, marca, modelo, año, costoDiario, capacidadCarga);
+                double capacidadCarga = scanner.nextDouble();
+                scanner.nextLine();  // Consumir salto de línea
+                Camioneta camioneta = new Camioneta(idVehiculo, marca, modelo, año, costoDiario, capacidadCarga);
+                admin.añadirVehiculo(camioneta);
                 break;
-
-            case "autobús":
+            case 4: // Autobús
                 System.out.print("Capacidad de pasajeros: ");
-                int capacidadPasajeros = Integer.parseInt(scanner.nextLine());
-                vehiculo = new Autobus(idVehiculo, marca, modelo, año, costoDiario, capacidadPasajeros);
+                int capacidadPasajeros = scanner.nextInt();
+                scanner.nextLine();  // Consumir salto de línea
+                Autobus bus = new Autobus(idVehiculo, marca, modelo, año, costoDiario, capacidadPasajeros);
+                admin.añadirVehiculo(bus);
                 break;
-
             default:
-                System.out.println("Tipo de vehículo no reconocido.");
-                scanner.close();
-                return;
+                System.out.println("Opción no válida.");
+        }
+        System.out.println("Vehículo añadido exitosamente.");
+    }
+
+    // Método para listar vehículos disponibles
+    public static void listarVehiculosDisponibles(Administrador admin) {
+        System.out.println("\n--- Vehículos Disponibles ---");
+        for (Vehiculo vehiculo : admin.listarVehiculosDisponibles()) {
+            System.out.println(vehiculo.toString());
+        }
+    }
+
+    // Método para reservar un vehículo
+    public static void reservarVehiculo(Administrador admin, Scanner scanner) {
+        System.out.println("\n--- Reservar Vehículo ---");
+        System.out.print("Ingrese su ID de cliente: ");
+        String idCliente = scanner.nextLine();
+
+        System.out.print("Ingrese su nombre: ");
+        String nombre = scanner.nextLine();
+
+        Cliente cliente = new Cliente(idCliente, nombre);
+
+        listarVehiculosDisponibles(admin);
+
+        System.out.print("Ingrese el ID del vehículo que desea reservar: ");
+        String idVehiculo = scanner.nextLine();
+
+        Vehiculo vehiculo = null;
+        for (Vehiculo v : admin.listarVehiculosDisponibles()) {
+            if (v.getIdVehiculo().equals(idVehiculo)) {
+                vehiculo = v;
+                break;
+            }
         }
 
-        // Establecer disponibilidad
-        vehiculo.setDisponible(disponibilidad);
-        administrador.añadirVehiculo(vehiculo);
-
-        // Mostrar vehículos disponibles
-        System.out.println("\n=== Vehículos Disponibles ===");
-        for (Vehiculo v : administrador.listarVehiculosDisponibles()) {
-            System.out.println("ID: " + v.getIdVehiculo() + 
-                               ", Marca: " + v.getMarca() + 
-                               ", Modelo: " + v.getModelo() + 
-                               ", Disponible: " + v.isDisponible());
+        if (vehiculo == null) {
+            System.out.println("Vehículo no encontrado o no disponible.");
+            return;
         }
 
-        
-        // Hacer una reserva
-        System.out.println("\n=== Proceso de Reserva ===");
-        System.out.print("Ingrese fecha de inicio (YYYY-MM-DD): ");
-        LocalDate fechaInicio = LocalDate.parse(scanner.nextLine());
-        
-        System.out.print("Ingrese número de días de reserva: ");
-        int dias = Integer.parseInt(scanner.nextLine());
-        
-        LocalDate fechaFin = fechaInicio.plusDays(dias);
-        
-        cliente.reservarVehiculo(vehiculo, fechaInicio, fechaFin, false, true); // Reserva sin seguro, con GPS
+        System.out.print("Fecha de inicio (yyyy-mm-dd): ");
+        String fechaInicioStr = scanner.nextLine();
+        LocalDate fechaInicio = LocalDate.parse(fechaInicioStr);
 
-        // Confirmar reserva
-        System.out.println("\n=== Reserva Realizada ===");
-        System.out.println("ID de Reserva: " + cliente.getReservas());
-        System.out.println("Vehículo reservado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
-        System.out.println("¿El vehículo está disponible? " + vehiculo.isDisponible()); // Debería ser false
+        System.out.print("Fecha de fin (yyyy-mm-dd): ");
+        String fechaFinStr = scanner.nextLine();
+        LocalDate fechaFin = LocalDate.parse(fechaFinStr);
 
-        // Cerrar el escáner
-        scanner.close();
+        System.out.print("¿Desea seguro? (true/false): ");
+        boolean seguro = scanner.nextBoolean();
+
+        System.out.print("¿Desea GPS? (true/false): ");
+        boolean gps = scanner.nextBoolean();
+
+        cliente.reservarVehiculo(vehiculo, fechaInicio, fechaFin, seguro, gps);
     }
 }

@@ -1,28 +1,21 @@
-public class Moto extends Vehiculo{
-    private int cilindrada;
+public class Moto extends Vehiculo {
+    private int cilindrada; // en cc
 
     public Moto(String idVehiculo, String marca, String modelo, int año, double costoDiario, int cilindrada) {
         super(idVehiculo, marca, modelo, año, costoDiario);
         this.cilindrada = cilindrada;
     }
 
-    @Override
-    protected void setDisponible(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDisponible'");
+    public int getCilindrada() {
+        return cilindrada;
+    }
+
+    public void setCilindrada(int cilindrada) {
+        this.cilindrada = cilindrada;
     }
 
     @Override
-    protected String getIdVehiculo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIdVehiculo'");
+    public String toString() {
+        return super.getMarca() + " " + super.getModelo() + " (" + cilindrada + "cc)";
     }
-
-    @Override
-    public String getModelo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getModelo'");
-    }
-
-    // Getters y Setters...
 }

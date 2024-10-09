@@ -1,5 +1,4 @@
-
-public abstract class Vehiculo {
+public class Vehiculo {
     private String idVehiculo;
     private String marca;
     private String modelo;
@@ -13,39 +12,32 @@ public abstract class Vehiculo {
         this.modelo = modelo;
         this.año = año;
         this.costoDiario = costoDiario;
-        this.disponibilidad = true; // Por defecto disponible
+        this.disponibilidad = true;  // Disponible por defecto
     }
 
     public double calcularPrecio(int dias, boolean seguro, boolean gps) {
-        double precio = dias * costoDiario;
+        double precioBase = dias * costoDiario;
         if (seguro) {
-            precio += precio * 0.10; // 10% adicional
+            precioBase += precioBase * 0.10;  // 10% adicional por seguro
         }
         if (gps) {
-            precio += 5 * dias; // $5 por día
+            precioBase += dias * 5;  // Cargo fijo de $5 por día por GPS
         }
-        return precio;
+        return precioBase;
     }
-
-    protected abstract void setDisponible(boolean b);
 
     public boolean isDisponible() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isDisponible'");
+        return disponibilidad;
     }
 
-    protected abstract String getIdVehiculo();
-
-    public String getMarca() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMarca'");
+    public void setDisponible(boolean disponibilidad) {
+        this.disponibilidad = disponibilidad;
     }
 
-    public String getModelo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getModelo'");
-    }
-
-
-    // Getters y Setters
+    // Getters y setters para otros atributos
+    public String getIdVehiculo() { return idVehiculo; }
+    public String getMarca() { return marca; }
+    public String getModelo() { return modelo; }
+    public int getAño() { return año; }
+    public double getCostoDiario() { return costoDiario; }
 }
